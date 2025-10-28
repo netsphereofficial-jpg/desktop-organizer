@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>com.desktop.organizer</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/zsh</string>
+        <string>/Users/nikhil/Desktop/organize_desktop.sh</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>12</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/nikhil/.desktop_organizer_stdout.log</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/nikhil/.desktop_organizer_stderr.log</string>
+
+    <key>RunAtLoad</key>
+    <true/>
+
+    <key>StartOnMount</key>
+    <true/>
+</dict>
+</plist>

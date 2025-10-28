@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+*.temp
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Personal data
+*.local
