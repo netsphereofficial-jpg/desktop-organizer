@@ -4,6 +4,9 @@
 # Automatically organizes files on Desktop into appropriate folders
 # Created: 2025-10-28
 
+# Prevent errors when glob patterns don't match any files
+setopt null_glob
+
 DESKTOP_PATH="$HOME/Desktop"
 DATE=$(date +%Y-%m-%d)
 LOG_FILE="$HOME/.desktop_organizer.log"
@@ -19,7 +22,9 @@ cd "$DESKTOP_PATH" || exit 1
 log_message "Starting desktop organization..."
 
 # Create folders if they don't exist
-mkdir -p "Screenshots" "Projects" "Builds & Releases/StepzSync" "Builds & Releases/Belloo" \
+mkdir -p "Screenshots" "Projects" \
+         "Builds & Releases/StepzSync" "Builds & Releases/Belloo" "Builds & Releases/Other" \
+         "Security/Keystores" "Security/Certificates" \
          "Archives" "Documents/Personal" "Documents/Financial" "Documents/Photos" \
          "Notes" "Inbox"
 
@@ -35,20 +40,54 @@ for file in Screenshot*.png Simulator*.png; do
     fi
 done
 
-# Move APK files to Builds & Releases
-for file in *.apk; do
+# Move APK and AAB files to Builds & Releases
+for file in *.apk *.aab; do
     if [[ -f "$file" ]]; then
-        if [[ "$file" == *"StepzSync"* ]]; then
+        if [[ "$file" == *"stepzsync"* ]] || [[ "$file" == *"StepzSync"* ]]; then
             mv "$file" "Builds & Releases/StepzSync/"
-            log_message "Moved APK to StepzSync: $file"
+            log_message "Moved build to StepzSync: $file"
             ((MOVED_COUNT++))
-        elif [[ "$file" == *"belloo"* ]]; then
+        elif [[ "$file" == *"belloo"* ]] || [[ "$file" == *"Belloo"* ]]; then
             mv "$file" "Builds & Releases/Belloo/"
-            log_message "Moved APK to Belloo: $file"
+            log_message "Moved build to Belloo: $file"
             ((MOVED_COUNT++))
         else
-            mv "$file" "Builds & Releases/"
-            log_message "Moved APK: $file"
+            mv "$file" "Builds & Releases/Other/"
+            log_message "Moved build: $file"
+            ((MOVED_COUNT++))
+        fi
+    fi
+done
+
+# Move keystore and security files to Security folder
+for file in *.jks *.keystore *.p12 *.pem *.crt *.key; do
+    if [[ -f "$file" ]]; then
+        if [[ "$file" == *"keystore"* ]] || [[ "$file" == *.jks ]]; then
+            mv "$file" "Security/Keystores/"
+            log_message "Moved keystore to Security: $file"
+            ((MOVED_COUNT++))
+        else
+            mv "$file" "Security/Certificates/"
+            log_message "Moved certificate to Security: $file"
+            ((MOVED_COUNT++))
+        fi
+    fi
+done
+
+# Move debug symbols folders to appropriate build folder
+for dir in *-debug-symbols; do
+    if [[ -d "$dir" ]]; then
+        if [[ "$dir" == *"stepzsync"* ]]; then
+            mv "$dir" "Builds & Releases/StepzSync/"
+            log_message "Moved debug symbols to StepzSync: $dir"
+            ((MOVED_COUNT++))
+        elif [[ "$dir" == *"belloo"* ]]; then
+            mv "$dir" "Builds & Releases/Belloo/"
+            log_message "Moved debug symbols to Belloo: $dir"
+            ((MOVED_COUNT++))
+        else
+            mv "$dir" "Builds & Releases/Other/"
+            log_message "Moved debug symbols: $dir"
             ((MOVED_COUNT++))
         fi
     fi

@@ -7,17 +7,42 @@
 
     <key>ProgramArguments</key>
     <array>
-        <string>/bin/zsh</string>
-        <string>/Users/nikhil/Desktop/organize_desktop.sh</string>
+        <string>/Users/nikhil/.local/bin/organize_desktop.sh</string>
     </array>
 
-    <key>StartCalendarInterval</key>
+    <key>EnvironmentVariables</key>
     <dict>
-        <key>Hour</key>
-        <integer>12</integer>
-        <key>Minute</key>
-        <integer>0</integer>
+        <key>PATH</key>
+        <string>/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin</string>
     </dict>
+
+    <key>StartCalendarInterval</key>
+    <array>
+        <dict>
+            <key>Hour</key>
+            <integer>9</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>13</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>18</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+        <dict>
+            <key>Hour</key>
+            <integer>22</integer>
+            <key>Minute</key>
+            <integer>0</integer>
+        </dict>
+    </array>
 
     <key>StandardOutPath</key>
     <string>/Users/nikhil/.desktop_organizer_stdout.log</string>
